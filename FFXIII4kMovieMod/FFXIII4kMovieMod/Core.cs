@@ -1,4 +1,5 @@
 ﻿using FFXIII4kMovieMod.SupportClasses;
+using Spectre.Console; // Implemented Spectre Console Namespace.
 using System;
 using System.IO;
 using System.Threading;
@@ -9,21 +10,24 @@ namespace FFXIII4kMovieMod
     {
         static void Main()
         {
-            Console.WriteLine("");
-            Console.WriteLine("------------------------------------------------------------------------------");
-            Console.WriteLine("                  FFXIII - 4K Remastered FMVs with PS3 Audio");
-            Console.WriteLine("");
-            Console.WriteLine("                             Mod by: NomNom");
-            Console.WriteLine("                             Installer written by: Surihix");
-            Console.WriteLine("------------------------------------------------------------------------------");
-            Console.WriteLine("");
-            Console.WriteLine("");
 
+            // AnsiConsole works very similarly to System.Console / Console. You can mix both Console and AnsiConsole together without having conflicts or errors.
+
+            AnsiConsole.Write(new FigletText("FFXIII - 4K Remastered FMVs with PS3 Audio").Centered().Color(Color.Cyan1));
+
+            // Markup is used to apply format to the text, like centering the text.
+            // AnsiConsole.MarkupLine is similar to Console.WriteLine, except we can dynamically adjust the text style, like adjust the colour of the text by placing [red] [/] in between the text we want to recolour, almost like HTML tags.
+
+            AnsiConsole.Write(new Markup("----------------------------------------------------------------------------------------").Centered());
+
+            AnsiConsole.Write(new Markup("Installer written by: Surihix.\n4K FMVs made and Installer modified by: NomNom").Centered());
+
+            AnsiConsole.Write(new Markup("----------------------------------------------------------------------------------------").Centered());
 
             try
             {
                 // Set Game path
-                InstallerMethods.DisplayMessageBox("Select the 'FFXiiiLauncher.exe' file present in the FINAL FANTASY XIII game folder.", "Locate launcher", InstallerEnums.MsgBoxIcon.Info);
+                InstallerMethods.DisplayMessageBox("Select the 'FFXiiiLauncher.exe' file present in the FINAL FANTASY XIII game folder.", "Locate FINAL FANTASY XIII launcher", InstallerEnums.MsgBoxIcon.Info);
                 var whitePath = InstallerMethods.SetPath("FFXiiiLauncher.exe");
 
                 if (whitePath.Equals(""))
@@ -37,8 +41,15 @@ namespace FFXIII4kMovieMod
                     InstallerMethods.ErrorExit("Selected file path is not a valid FINAL FANTASY XIII game directory.");
                 }
 
+                string VOSelection = AnsiConsole.Prompt(new SelectionPrompt<String>()
+                    .Title("\nChoose the [green]Voice Over FMVs[/] that you want to install.")
+                    .PageSize(3) // Set this any lower than 3, will result in an exception.
+                    .AddChoices(new[] { "English Voiceovers.", "Japanese Voiceovers.", "EXIT." })
+                    );
+
 
                 // Set voiceovers to patch
+                /*
                 Console.WriteLine("Select the voiceover with which you are playing the game:");
                 Console.WriteLine("");
                 Console.WriteLine("---------------------------------------------------------------");
@@ -49,23 +60,25 @@ namespace FFXIII4kMovieMod
                 Console.WriteLine("");
                 Console.WriteLine("Your Input:");
                 var setVO = Console.ReadLine();
+                */
+
                 var vo = new InstallerEnums.VoiceOvers();
-                switch (setVO)
+                switch (VOSelection)
                 {
-                    case "u":
-                    case "U":
+                    //case "u":
+                    case "English Voiceovers.":
                         vo = InstallerEnums.VoiceOvers.us;
                         break;
 
-                    case "j":
-                    case "J":
+                    //case "j":
+                    case "Japanese Voiceovers.":
                         vo = InstallerEnums.VoiceOvers.jpn;
                         break;
 
-                    case "x":
-                    case "X":
+                    //case "x":
+                    case "EXIT.":
                         Console.WriteLine("");
-                        Console.WriteLine("Exiting....");
+                        Console.WriteLine("Exiting the installer....");
                         Thread.Sleep(2000);
                         Environment.Exit(0);
                         break;
@@ -82,6 +95,15 @@ namespace FFXIII4kMovieMod
 
 
                 // Set Patch type
+
+                string PatchTypeSelection = AnsiConsole.Prompt(new SelectionPrompt<String>()
+                .Title("\nChoose the [green]Voice Over FMVs[/] that you want to install.")
+                .PageSize(3) // Set this any lower than 3, will result in an exception.
+                .AddChoices(new[] { "Adding Movies.", "ReAdding Movies.", "EXIT." })
+                );
+
+
+                /*
                 Console.WriteLine("Would you like to Add or ReAdd movies?");
                 Console.WriteLine("");
                 Console.WriteLine("---------------------------------------------------------------");
@@ -92,21 +114,23 @@ namespace FFXIII4kMovieMod
                 Console.WriteLine("");
                 Console.WriteLine("Your Input:");
                 var setPatchType = Console.ReadLine();
+                */
+
                 var patchType = new InstallerEnums.PatchTypes();
-                switch (setPatchType)
+                switch (PatchTypeSelection)
                 {
-                    case "a":
-                    case "A":
+                    //case "a":
+                    case "Adding Movies.":
                         patchType = InstallerEnums.PatchTypes.Add;
                         break;
 
-                    case "r":
-                    case "R":
+                    //case "r":
+                    case "ReAdding Movies.":
                         patchType = InstallerEnums.PatchTypes.ReAdd;
                         break;
 
-                    case "x":
-                    case "X":
+                    //case "x":
+                    case "EXIT.":
                         Console.WriteLine("");
                         Console.WriteLine("Exiting....");
                         Thread.Sleep(2000);

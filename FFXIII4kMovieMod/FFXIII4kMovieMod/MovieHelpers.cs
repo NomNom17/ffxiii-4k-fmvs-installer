@@ -2,6 +2,7 @@
 using BinaryWriterEx;
 using FFXIII4kMovieMod.SupportClasses;
 using Ionic.Zip;
+using Spectre.Console; // Implemented Spectre Console Namespace.
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -60,6 +61,11 @@ namespace FFXIII4kMovieMod
                 if (extractSpace > ncmpUncmpSize)
                 {
                     extractSpacePresent = true;
+
+                    Grid TotalSpace = new Grid();
+
+
+
                 }
                 else
                 {

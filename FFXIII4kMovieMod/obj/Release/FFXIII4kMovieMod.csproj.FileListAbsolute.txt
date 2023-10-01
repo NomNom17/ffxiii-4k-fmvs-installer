@@ -19,3 +19,16 @@ C:\Users\NomNom\Desktop\FFXIII4kMovieMod\obj\Release\FFXIII4kMovieMod.csproj.Ass
 C:\Users\NomNom\Desktop\FFXIII4kMovieMod\obj\Release\FFXIII4kMovieMod.csproj.CoreCompileInputs.cache
 C:\Users\NomNom\Desktop\FFXIII4kMovieMod\obj\Release\FFXIII4kMovieMod.csproj.CopyComplete
 C:\Users\NomNom\Desktop\FFXIII4kMovieMod\obj\Release\FFXIII4kMovieMod.exe
+C:\Users\NomNom\Documents\GitHub\ffxiii-4k-fmvs-installer\FFXIII4kMovieMod\bin\Release\FFXIII4kMovieMod.exe.config
+C:\Users\NomNom\Documents\GitHub\ffxiii-4k-fmvs-installer\FFXIII4kMovieMod\bin\Release\FFXIII4kMovieMod.exe
+C:\Users\NomNom\Documents\GitHub\ffxiii-4k-fmvs-installer\FFXIII4kMovieMod\bin\Release\Spectre.Console.dll
+C:\Users\NomNom\Documents\GitHub\ffxiii-4k-fmvs-installer\FFXIII4kMovieMod\bin\Release\System.Buffers.dll
+C:\Users\NomNom\Documents\GitHub\ffxiii-4k-fmvs-installer\FFXIII4kMovieMod\bin\Release\System.Memory.dll
+C:\Users\NomNom\Documents\GitHub\ffxiii-4k-fmvs-installer\FFXIII4kMovieMod\bin\Release\System.Numerics.Vectors.dll
+C:\Users\NomNom\Documents\GitHub\ffxiii-4k-fmvs-installer\FFXIII4kMovieMod\bin\Release\System.Runtime.CompilerServices.Unsafe.dll
+C:\Users\NomNom\Documents\GitHub\ffxiii-4k-fmvs-installer\FFXIII4kMovieMod\bin\Release\DotNetZip.pdb
+C:\Users\NomNom\Documents\GitHub\ffxiii-4k-fmvs-installer\FFXIII4kMovieMod\bin\Release\DotNetZip.xml
+C:\Users\NomNom\Documents\GitHub\ffxiii-4k-fmvs-installer\FFXIII4kMovieMod\obj\Release\FFXIII4kMovieMod.csproj.AssemblyReference.cache
+C:\Users\NomNom\Documents\GitHub\ffxiii-4k-fmvs-installer\FFXIII4kMovieMod\obj\Release\FFXIII4kMovieMod.csproj.CoreCompileInputs.cache
+C:\Users\NomNom\Documents\GitHub\ffxiii-4k-fmvs-installer\FFXIII4kMovieMod\obj\Release\FFXIII4kMovieMod.csproj.CopyComplete
+C:\Users\NomNom\Documents\GitHub\ffxiii-4k-fmvs-installer\FFXIII4kMovieMod\obj\Release\FFXIII4kMovieMod.exe
