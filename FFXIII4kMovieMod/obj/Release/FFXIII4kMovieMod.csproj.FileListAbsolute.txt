@@ -1,0 +1,21 @@
+U:\Documents\Visual Studio Projects\C# stuff\App projects\FFXIII Mod Programs\FFXIII\FFXIII4kMovieMod\bin\Release\FFXIII4kMovieMod.exe.config
+U:\Documents\Visual Studio Projects\C# stuff\App projects\FFXIII Mod Programs\FFXIII\FFXIII4kMovieMod\bin\Release\FFXIII4kMovieMod.exe
+U:\Documents\Visual Studio Projects\C# stuff\App projects\FFXIII Mod Programs\FFXIII\FFXIII4kMovieMod\bin\Release\DotNetZip.dll
+U:\Documents\Visual Studio Projects\C# stuff\App projects\FFXIII Mod Programs\FFXIII\FFXIII4kMovieMod\bin\Release\LocateFile.dll
+U:\Documents\Visual Studio Projects\C# stuff\App projects\FFXIII Mod Programs\FFXIII\FFXIII4kMovieMod\bin\Release\WDBtool.dll
+U:\Documents\Visual Studio Projects\C# stuff\App projects\FFXIII Mod Programs\FFXIII\FFXIII4kMovieMod\bin\Release\WhiteBinTools.dll
+U:\Documents\Visual Studio Projects\C# stuff\App projects\FFXIII Mod Programs\FFXIII\FFXIII4kMovieMod\bin\Release\DotNetZip.pdb
+U:\Documents\Visual Studio Projects\C# stuff\App projects\FFXIII Mod Programs\FFXIII\FFXIII4kMovieMod\bin\Release\DotNetZip.xml
+U:\Documents\Visual Studio Projects\C# stuff\App projects\FFXIII Mod Programs\FFXIII\FFXIII4kMovieMod\obj\Release\FFXIII4kMovieMod.csproj.AssemblyReference.cache
+U:\Documents\Visual Studio Projects\C# stuff\App projects\FFXIII Mod Programs\FFXIII\FFXIII4kMovieMod\obj\Release\FFXIII4kMovieMod.csproj.SuggestedBindingRedirects.cache
+U:\Documents\Visual Studio Projects\C# stuff\App projects\FFXIII Mod Programs\FFXIII\FFXIII4kMovieMod\obj\Release\FFXIII4kMovieMod.csproj.CoreCompileInputs.cache
+U:\Documents\Visual Studio Projects\C# stuff\App projects\FFXIII Mod Programs\FFXIII\FFXIII4kMovieMod\obj\Release\FFXIII4kMovieMod.csproj.CopyComplete
+U:\Documents\Visual Studio Projects\C# stuff\App projects\FFXIII Mod Programs\FFXIII\FFXIII4kMovieMod\obj\Release\FFXIII4kMovieMod.exe
+C:\Users\NomNom\Desktop\FFXIII4kMovieMod\bin\Release\FFXIII4kMovieMod.exe.config
+C:\Users\NomNom\Desktop\FFXIII4kMovieMod\bin\Release\FFXIII4kMovieMod.exe
+C:\Users\NomNom\Desktop\FFXIII4kMovieMod\bin\Release\DotNetZip.pdb
+C:\Users\NomNom\Desktop\FFXIII4kMovieMod\bin\Release\DotNetZip.xml
+C:\Users\NomNom\Desktop\FFXIII4kMovieMod\obj\Release\FFXIII4kMovieMod.csproj.AssemblyReference.cache
+C:\Users\NomNom\Desktop\FFXIII4kMovieMod\obj\Release\FFXIII4kMovieMod.csproj.CoreCompileInputs.cache
+C:\Users\NomNom\Desktop\FFXIII4kMovieMod\obj\Release\FFXIII4kMovieMod.csproj.CopyComplete
+C:\Users\NomNom\Desktop\FFXIII4kMovieMod\obj\Release\FFXIII4kMovieMod.exe
