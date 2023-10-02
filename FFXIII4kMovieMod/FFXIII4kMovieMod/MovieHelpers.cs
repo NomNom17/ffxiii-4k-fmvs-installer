@@ -61,11 +61,6 @@ namespace FFXIII4kMovieMod
                 if (extractSpace > ncmpUncmpSize)
                 {
                     extractSpacePresent = true;
-
-                    Grid TotalSpace = new Grid();
-
-
-
                 }
                 else
                 {
@@ -106,8 +101,9 @@ namespace FFXIII4kMovieMod
                 InstallerMethods.ErrorExit("There aren't any movie files present in the 'movie_data' folder. please run this installer only after adding the ncmp files into the 'movie_data' folder.");
             }
 
-            Console.WriteLine("Finished checking extracted files");
+            //Console.WriteLine("Finished checking extracted files");
 
+            AnsiConsole.MarkupLine("[green]Finished checking extracted files.[/]");
 
             Console.WriteLine("");
             Console.WriteLine("Proceeding to unpack archive....");
@@ -348,7 +344,9 @@ namespace FFXIII4kMovieMod
                                 if (!spacePresent && !copiedAlready && !invalidWMPid)
                                 {
                                     Console.WriteLine($"Processing movie file '{currentMovieName}.bik'....");
-                                    Console.WriteLine("Enough space not available for this movie file. skipped to next file.");
+                                    //Console.WriteLine("Enough space not available for this movie file. skipped to next file.");
+
+                                    AnsiConsole.MarkupLine("[red]Enough space not available for this movie file. skipped to next file.[/]");
                                 }
 
                                 Console.WriteLine("");

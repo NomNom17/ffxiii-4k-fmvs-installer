@@ -1,5 +1,3 @@
-C:\Users\NomNom\Documents\GitHub\ffxiii-4k-fmvs-installer\FFXIII4kMovieMod\obj\Debug\FFXIII4kMovieMod.csproj.AssemblyReference.cache
-C:\Users\NomNom\Documents\GitHub\ffxiii-4k-fmvs-installer\FFXIII4kMovieMod\obj\Debug\FFXIII4kMovieMod.csproj.CoreCompileInputs.cache
 C:\Users\NomNom\Documents\GitHub\ffxiii-4k-fmvs-installer\FFXIII4kMovieMod\bin\Debug\FFXIII4kMovieMod.exe.config
 C:\Users\NomNom\Documents\GitHub\ffxiii-4k-fmvs-installer\FFXIII4kMovieMod\bin\Debug\FFXIII4kMovieMod.exe
 C:\Users\NomNom\Documents\GitHub\ffxiii-4k-fmvs-installer\FFXIII4kMovieMod\bin\Debug\FFXIII4kMovieMod.pdb
@@ -14,6 +12,8 @@ C:\Users\NomNom\Documents\GitHub\ffxiii-4k-fmvs-installer\FFXIII4kMovieMod\bin\D
 C:\Users\NomNom\Documents\GitHub\ffxiii-4k-fmvs-installer\FFXIII4kMovieMod\bin\Debug\WhiteBinTools.dll
 C:\Users\NomNom\Documents\GitHub\ffxiii-4k-fmvs-installer\FFXIII4kMovieMod\bin\Debug\DotNetZip.pdb
 C:\Users\NomNom\Documents\GitHub\ffxiii-4k-fmvs-installer\FFXIII4kMovieMod\bin\Debug\DotNetZip.xml
+C:\Users\NomNom\Documents\GitHub\ffxiii-4k-fmvs-installer\FFXIII4kMovieMod\obj\Debug\FFXIII4kMovieMod.csproj.AssemblyReference.cache
+C:\Users\NomNom\Documents\GitHub\ffxiii-4k-fmvs-installer\FFXIII4kMovieMod\obj\Debug\FFXIII4kMovieMod.csproj.CoreCompileInputs.cache
 C:\Users\NomNom\Documents\GitHub\ffxiii-4k-fmvs-installer\FFXIII4kMovieMod\obj\Debug\FFXIII4kMovieMod.csproj.CopyComplete
 C:\Users\NomNom\Documents\GitHub\ffxiii-4k-fmvs-installer\FFXIII4kMovieMod\obj\Debug\FFXIII4kMovieMod.exe
 C:\Users\NomNom\Documents\GitHub\ffxiii-4k-fmvs-installer\FFXIII4kMovieMod\obj\Debug\FFXIII4kMovieMod.pdb
