@@ -398,3 +398,5 @@ FodyWeavers.xsd
 *.sln.iml
 FFXIII4kMovieMod/obj/Debug/FFXIII4kMovieMod.csproj.FileListAbsolute.txt
 FFXIII4kMovieMod/obj/Debug/FFXIII4kMovieMod.csproj.FileListAbsolute.txt
+FFXIII4kMovieMod.zip
+installer.zip

@@ -7,13 +7,29 @@ C:\Users\NomNom\Documents\GitHub\ffxiii-4k-fmvs-installer\FFXIII4kMovieMod\bin\D
 C:\Users\NomNom\Documents\GitHub\ffxiii-4k-fmvs-installer\FFXIII4kMovieMod\bin\Debug\System.Numerics.Vectors.dll
 C:\Users\NomNom\Documents\GitHub\ffxiii-4k-fmvs-installer\FFXIII4kMovieMod\bin\Debug\System.Runtime.CompilerServices.Unsafe.dll
 C:\Users\NomNom\Documents\GitHub\ffxiii-4k-fmvs-installer\FFXIII4kMovieMod\bin\Debug\DotNetZip.dll
-C:\Users\NomNom\Documents\GitHub\ffxiii-4k-fmvs-installer\FFXIII4kMovieMod\bin\Debug\LocateFile.dll
-C:\Users\NomNom\Documents\GitHub\ffxiii-4k-fmvs-installer\FFXIII4kMovieMod\bin\Debug\WDBtool.dll
-C:\Users\NomNom\Documents\GitHub\ffxiii-4k-fmvs-installer\FFXIII4kMovieMod\bin\Debug\WhiteBinTools.dll
 C:\Users\NomNom\Documents\GitHub\ffxiii-4k-fmvs-installer\FFXIII4kMovieMod\bin\Debug\DotNetZip.pdb
-C:\Users\NomNom\Documents\GitHub\ffxiii-4k-fmvs-installer\FFXIII4kMovieMod\bin\Debug\DotNetZip.xml
 C:\Users\NomNom\Documents\GitHub\ffxiii-4k-fmvs-installer\FFXIII4kMovieMod\obj\Debug\FFXIII4kMovieMod.csproj.AssemblyReference.cache
 C:\Users\NomNom\Documents\GitHub\ffxiii-4k-fmvs-installer\FFXIII4kMovieMod\obj\Debug\FFXIII4kMovieMod.csproj.CoreCompileInputs.cache
 C:\Users\NomNom\Documents\GitHub\ffxiii-4k-fmvs-installer\FFXIII4kMovieMod\obj\Debug\FFXIII4kMovieMod.csproj.CopyComplete
 C:\Users\NomNom\Documents\GitHub\ffxiii-4k-fmvs-installer\FFXIII4kMovieMod\obj\Debug\FFXIII4kMovieMod.exe
 C:\Users\NomNom\Documents\GitHub\ffxiii-4k-fmvs-installer\FFXIII4kMovieMod\obj\Debug\FFXIII4kMovieMod.pdb
+U:\Documents\Visual Studio Projects\C# stuff\App projects\FFXIII Mod Programs\FFXIII\External\FFXIII4kMovieMod\bin\Debug\FFXIII4kMovieMod.exe.config
+U:\Documents\Visual Studio Projects\C# stuff\App projects\FFXIII Mod Programs\FFXIII\External\FFXIII4kMovieMod\bin\Debug\FFXIII4kMovieMod.exe
+U:\Documents\Visual Studio Projects\C# stuff\App projects\FFXIII Mod Programs\FFXIII\External\FFXIII4kMovieMod\bin\Debug\FFXIII4kMovieMod.pdb
+U:\Documents\Visual Studio Projects\C# stuff\App projects\FFXIII Mod Programs\FFXIII\External\FFXIII4kMovieMod\bin\Debug\Spectre.Console.dll
+U:\Documents\Visual Studio Projects\C# stuff\App projects\FFXIII Mod Programs\FFXIII\External\FFXIII4kMovieMod\bin\Debug\System.Buffers.dll
+U:\Documents\Visual Studio Projects\C# stuff\App projects\FFXIII Mod Programs\FFXIII\External\FFXIII4kMovieMod\bin\Debug\System.Memory.dll
+U:\Documents\Visual Studio Projects\C# stuff\App projects\FFXIII Mod Programs\FFXIII\External\FFXIII4kMovieMod\bin\Debug\System.Numerics.Vectors.dll
+U:\Documents\Visual Studio Projects\C# stuff\App projects\FFXIII Mod Programs\FFXIII\External\FFXIII4kMovieMod\bin\Debug\System.Runtime.CompilerServices.Unsafe.dll
+U:\Documents\Visual Studio Projects\C# stuff\App projects\FFXIII Mod Programs\FFXIII\External\FFXIII4kMovieMod\bin\Debug\DotNetZip.dll
+U:\Documents\Visual Studio Projects\C# stuff\App projects\FFXIII Mod Programs\FFXIII\External\FFXIII4kMovieMod\bin\Debug\LocateFile.dll
+U:\Documents\Visual Studio Projects\C# stuff\App projects\FFXIII Mod Programs\FFXIII\External\FFXIII4kMovieMod\bin\Debug\WDBtool.dll
+U:\Documents\Visual Studio Projects\C# stuff\App projects\FFXIII Mod Programs\FFXIII\External\FFXIII4kMovieMod\bin\Debug\WhiteBinTools.dll
+U:\Documents\Visual Studio Projects\C# stuff\App projects\FFXIII Mod Programs\FFXIII\External\FFXIII4kMovieMod\bin\Debug\DotNetZip.pdb
+U:\Documents\Visual Studio Projects\C# stuff\App projects\FFXIII Mod Programs\FFXIII\External\FFXIII4kMovieMod\bin\Debug\DotNetZip.xml
+U:\Documents\Visual Studio Projects\C# stuff\App projects\FFXIII Mod Programs\FFXIII\External\FFXIII4kMovieMod\obj\Debug\FFXIII4kMovieMod.csproj.AssemblyReference.cache
+U:\Documents\Visual Studio Projects\C# stuff\App projects\FFXIII Mod Programs\FFXIII\External\FFXIII4kMovieMod\obj\Debug\FFXIII4kMovieMod.csproj.SuggestedBindingRedirects.cache
+U:\Documents\Visual Studio Projects\C# stuff\App projects\FFXIII Mod Programs\FFXIII\External\FFXIII4kMovieMod\obj\Debug\FFXIII4kMovieMod.csproj.CoreCompileInputs.cache
+U:\Documents\Visual Studio Projects\C# stuff\App projects\FFXIII Mod Programs\FFXIII\External\FFXIII4kMovieMod\obj\Debug\FFXIII4kMovieMod.csproj.CopyComplete
+U:\Documents\Visual Studio Projects\C# stuff\App projects\FFXIII Mod Programs\FFXIII\External\FFXIII4kMovieMod\obj\Debug\FFXIII4kMovieMod.exe
+U:\Documents\Visual Studio Projects\C# stuff\App projects\FFXIII Mod Programs\FFXIII\External\FFXIII4kMovieMod\obj\Debug\FFXIII4kMovieMod.pdb

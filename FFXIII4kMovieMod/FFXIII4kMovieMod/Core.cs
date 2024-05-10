@@ -11,15 +11,11 @@ namespace FFXIII4kMovieMod
     {
         static void Main()
         {
-
             // AnsiConsole works very similarly to System.Console / Console. You can mix both Console and AnsiConsole together without having conflicts or errors.
-
-            //AnsiConsole.Write(new FigletText("FFXIII - 4K Remastered FMVs with PS3 Audio").Centered().Color(Color.Cyan1));
 
             AnsiConsole.Write(new Markup("[cyan1][bold]FINAL FANTASY XIII - 4K FMVs with PS3 Audio Tracks Installer.[/][/]").Centered());
 
             // Markup is used to apply format to the text, like centering the text.
-            // AnsiConsole.MarkupLine is similar to Console.WriteLine, except we can dynamically adjust the text style, like the colour of the text by placing [red] [/] in between the text we want to recolour, almost like HTML tags.
 
             AnsiConsole.Write(new Markup("----------------------------------------------------------------------------------------").Centered());
 
@@ -48,6 +44,9 @@ namespace FFXIII4kMovieMod
                     InstallerMethods.ErrorExit("Selected file path is not a valid FINAL FANTASY XIII game directory.");
                 }
 
+                // AnsiConsole.Prompt enables you to create a new instance of any of the three different prompts - https://spectreconsole.net/prompts/. SelectionPrompt is one of them, allows the user to use the arrow keys to navigate through selection of options and select whichever one they want.
+
+                // VOSelection is a string, and the reason why it is, is because it'll contain String data types, which are the choices (.AddChoices).
                 string VOSelection = AnsiConsole.Prompt(new SelectionPrompt<String>()
                     .Title("\nChoose the [green]FMVs voice over language[/] that you want to install.\n[grey]Use the Up or Down arrow keys to navigate the menu.[/]")
                     .PageSize(3) // Set this any lower than 3, will result in an exception.
@@ -55,39 +54,20 @@ namespace FFXIII4kMovieMod
                     .HighlightStyle(Style.WithDecoration(Decoration.RapidBlink).Foreground(Color.Cyan1))
                     );
 
-
-                // Set voiceovers to patch
-                /*
-                Console.WriteLine("Select the voiceover with which you are playing the game:");
-                Console.WriteLine("");
-                Console.WriteLine("---------------------------------------------------------------");
-                Console.WriteLine("Press 'u' key and then 'ENTER' key for English voiceover");
-                Console.WriteLine("Press 'j' key and then 'ENTER' key for Japanese voiceover");
-                Console.WriteLine("Press 'x' key and then 'ENTER' key to exit this installer");
-                Console.WriteLine("---------------------------------------------------------------");
-                Console.WriteLine("");
-                Console.WriteLine("Your Input:");
-                var setVO = Console.ReadLine();
-                */
-
                 var vo = new InstallerEnums.VoiceOvers();
                 switch (VOSelection)
                 {
-                    //case "u":
                     case "English Voiceovers.":
                         vo = InstallerEnums.VoiceOvers.us;
                         break;
 
-                    //case "j":
                     case "Japanese Voiceovers.":
                         vo = InstallerEnums.VoiceOvers.jpn;
                         break;
 
-                    //case "x":
                     case "EXIT.":
-                        //Console.WriteLine("");
-                        //Console.WriteLine("Exiting the installer....");
 
+                        // https://spectreconsole.net/live/status
                         AnsiConsole.Status().Start("\n[white]Exiting...[/]", LoadingStatus =>
                         {
                             LoadingStatus.Status("[white]Please wait...[/]");
@@ -103,17 +83,13 @@ namespace FFXIII4kMovieMod
                             Environment.Exit(0);
                         });
                         break;
-
-                    default:
-                        Console.WriteLine("");
-                        InstallerMethods.ErrorExit("Input key pressed was invalid");
-                        break;
                 }
 
                 Console.WriteLine("");
                 Console.WriteLine("");
                 Console.WriteLine("");
 
+                // AnsiConsole.MarkupLine is similar to Console.WriteLine, except we can dynamically adjust the text style, like the colour of the text by placing [red] [/] in between the text we want to recolour, almost like HTML tags.
 
                 AnsiConsole.MarkupLine("[italic]Adding Movies - Recommended for first time installation. Takes longer to complete.\nReAdding Movies - Recommended for applying Patches/Updates or to overwrite a corrupted movie file with a functioning movie file. Quicker to complete.[/]");
 
@@ -126,34 +102,17 @@ namespace FFXIII4kMovieMod
                 .HighlightStyle(Style.WithDecoration(Decoration.RapidBlink).Foreground(Color.Cyan1))
                 );
 
-
-                /*
-                Console.WriteLine("Would you like to Add or ReAdd movies?");
-                Console.WriteLine("");
-                Console.WriteLine("---------------------------------------------------------------");
-                Console.WriteLine("Press 'a' key and then 'ENTER' key for Adding movies");
-                Console.WriteLine("Press 'r' key and then 'ENTER' key for ReAdding movies");
-                Console.WriteLine("Press 'x' key and then 'ENTER' key to exit this installer");
-                Console.WriteLine("---------------------------------------------------------------");
-                Console.WriteLine("");
-                Console.WriteLine("Your Input:");
-                var setPatchType = Console.ReadLine();
-                */
-
                 var patchType = new InstallerEnums.PatchTypes();
                 switch (PatchTypeSelection)
                 {
-                    //case "a":
                     case "Adding Movies.":
                         patchType = InstallerEnums.PatchTypes.Add;
                         break;
 
-                    //case "r":
                     case "ReAdding Movies.":
                         patchType = InstallerEnums.PatchTypes.ReAdd;
                         break;
 
-                    //case "x":
                     case "EXIT.":
                         AnsiConsole.Status().Start("\n[white]Exiting...[/]", LoadingStatus =>
                         {
@@ -169,11 +128,6 @@ namespace FFXIII4kMovieMod
                             Console.Clear();
                             Environment.Exit(0);
                         });
-                        break;
-
-                    default:
-                        Console.WriteLine("");
-                        InstallerMethods.ErrorExit("Input key pressed was invalid");
                         break;
                 }
 
@@ -207,10 +161,6 @@ namespace FFXIII4kMovieMod
                     crashLogWriter.WriteLine("Error: " + ex);
                 }
 
-                /*Console.WriteLine("Crash exception recorded in Crash.txt file");
-                Console.WriteLine("");*/
-
-                //InstallerMethods.ErrorExit("" + ex);
                 AnsiConsole.Foreground = Color.Red;
 
                 AnsiConsole.WriteLine("Crash exception has been caught and recorded in the Crash.txt file!! Please try again. If installer still crashes, please report it on the Nexus Mods Page, or on the Discord Server.\n\nException information:\n" + ex);
@@ -235,7 +185,7 @@ namespace FFXIII4kMovieMod
                 switch (ReportTypeSelection)
                 {
                     case "Yes, on Nexus Mods.":
-                        Process.Start("https://www.nexusmods.com/finalfantasy13/mods/24?tab=files");
+                        Process.Start("https://www.nexusmods.com/finalfantasy13/mods/24?tab=posts");
                         break;
 
                     case "Yes, on the Discord Server.":
@@ -243,7 +193,20 @@ namespace FFXIII4kMovieMod
                         break;
 
                     case "No.":
-                        Environment.Exit(0);
+                        AnsiConsole.Status().Start("\n[white]Exiting...[/]", LoadingStatus =>
+                        {
+                            LoadingStatus.Status("[white]Please wait...[/]");
+                            LoadingStatus.Spinner(Spinner.Known.Star2);
+                            LoadingStatus.SpinnerStyle(Style.Parse("green"));
+                            Thread.Sleep(2000);
+
+                            LoadingStatus.Status("[green]Done![/]");
+                            Thread.Sleep(350);
+
+                            AnsiConsole.Clear();
+                            Console.Clear();
+                            Environment.Exit(0);
+                        });
                         break;
                 }
             }

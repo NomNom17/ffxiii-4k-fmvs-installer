@@ -124,7 +124,7 @@ namespace FFXIII4kMovieMod
 
             Thread.Sleep(1000);
             Console.WriteLine("");
-            UnpackTypeA.UnpackFull(CmnEnums.GameCodes.ff131, filelistFile, whiteImgFile);
+            UnpackTypeA.UnpackFull(ProgramEnums.GameCodes.ff131, filelistFile, whiteImgFile);
 
 
             // If patchType was set to ReAdd, then
@@ -287,8 +287,7 @@ namespace FFXIII4kMovieMod
                         {
                             case true:
                                 Console.WriteLine($"Processing movie file '{currentMovieName}.bik'....");
-                                Console.WriteLine("Determined enough space for this movie file");
-                                Console.WriteLine("Copying....");
+                                Console.WriteLine("Determined enough space for this movie file. Copying....");
                                 copyCounter++;
 
 
@@ -331,10 +330,8 @@ namespace FFXIII4kMovieMod
                                 {
                                     using (var movieStream = new FileStream(currentMovieFile, FileMode.Open, FileAccess.Read))
                                     {
-                                        movieStream.CopyTo(wmpStream);
+                                        movieStream.CopyToWithProgress(wmpStream, currentMovieSize);
                                     }
-
-                                    Console.WriteLine("Copied movie file");
                                 }
 
                                 Console.WriteLine("");
@@ -393,7 +390,7 @@ namespace FFXIII4kMovieMod
 
                     Console.WriteLine("");
                     Console.WriteLine("");
-                    RepackTypeA.RepackAll(CmnEnums.GameCodes.ff131, filelistFile, unpackedWhiteImgDir);
+                    RepackTypeA.RepackAll(ProgramEnums.GameCodes.ff131, filelistFile, unpackedWhiteImgDir);
 
                     InstallerMethods.IfFileFolderExistsDel(filelistFile + ".bak", InstallerEnums.DeleteType.file);
                     InstallerMethods.IfFileFolderExistsDel(whiteImgFile + ".bak", InstallerEnums.DeleteType.file);

@@ -1,0 +1,30 @@
+using System;
+using System.IO;
+
+public static class CopyToExtension
+{
+    public static void CopyToWithProgress(this FileStream inStream, FileStream outStream, long size)
+    {
+        int bufferSize = 81920;
+        long amountRemaining = size;
+        long amountCopied = 0;
+        decimal currentAmount;
+
+        while (amountRemaining > 0)
+        {
+            long arraySize = Math.Min(bufferSize, amountRemaining);
+            byte[] copyArray = new byte[arraySize];
+
+            _ = inStream.Read(copyArray, 0, (int)arraySize);
+            outStream.Write(copyArray, 0, (int)arraySize);
+
+            amountRemaining -= arraySize;
+
+            amountCopied += arraySize;
+            currentAmount = Math.Round(((decimal)amountCopied / size) * 100);
+            Console.Write("\r{0}", "Copied " + currentAmount + "%");
+        }
+
+        Console.WriteLine("");
+    }
+}

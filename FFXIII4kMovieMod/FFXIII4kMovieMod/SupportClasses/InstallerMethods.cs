@@ -30,7 +30,6 @@ namespace FFXIII4kMovieMod.SupportClasses
             MessageBox.Show(msg, msgTitle, MessageBoxButtons.OK, msgTypeIcon);
         }
 
-
         public static string SetPath(string fileToFind)
         {
             var foundPath = "";
