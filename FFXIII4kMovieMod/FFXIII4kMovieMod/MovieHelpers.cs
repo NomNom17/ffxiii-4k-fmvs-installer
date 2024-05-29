@@ -32,6 +32,11 @@ namespace FFXIII4kMovieMod
             Console.WriteLine("");
             Console.WriteLine("");
 
+            if (!Directory.Exists(moddedMoviesDir))
+            {
+                InstallerMethods.ErrorExit("The 'movie_data' folder could not be found next to the installer program.");
+            }
+
             // Get the drive letter of the drive
             // where the installer is present
             var installerDirDrive = Directory.GetDirectoryRoot(moddedMoviesDir);
@@ -77,7 +82,10 @@ namespace FFXIII4kMovieMod
                     var moddedBiks = Directory.GetFiles(ncmpOutDir, "*.bik", SearchOption.AllDirectories);
                     foreach (var bik in moddedBiks)
                     {
-                        File.Move(bik, Path.Combine(moddedMoviesDir, Path.GetFileName(bik)));
+                        var outBikFile = Path.Combine(moddedMoviesDir, Path.GetFileName(bik));
+                        InstallerMethods.IfFileFolderExistsDel(outBikFile, InstallerEnums.DeleteType.file);
+
+                        File.Move(bik, outBikFile);
                     }
 
                     InstallerMethods.IfFileFolderExistsDel(ncmpOutDir, InstallerEnums.DeleteType.folder);
