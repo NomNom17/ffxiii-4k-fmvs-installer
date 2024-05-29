@@ -1,234 +1,225 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using WhiteBinTools.FilelistClasses;
-using WhiteBinTools.RepackClasses;
 using WhiteBinTools.SupportClasses;
+using static WhiteBinTools.SupportClasses.ProgramEnums;
 
-namespace WhiteBinTools
+namespace WhiteBinTools.RepackClasses
 {
     public class RepackTypeD
     {
-        public static void RepackFilelist(CmnEnums.GameCodes gameCodeVar, string filelistFileVar, string extractedFilelistDir)
+        public static void RepackFilelist(GameCodes gameCode, string extractedFilelistDir)
         {
-            filelistFileVar.CheckFileExists("Error: Filelist file specified in the argument is missing");
-            extractedFilelistDir.CheckDirExists("Error: Unpacked filelist directory specified in the argument is missing");
-            var cryptTool = "ffxiiicrypt.exe";
+            var countsFile = Path.Combine(extractedFilelistDir, "~Counts.txt");
+            var encHeaderFile = Path.Combine(extractedFilelistDir, "EncryptionHeader_(DON'T DELETE)");
+            var outChunksDir = Path.Combine(extractedFilelistDir, "_chunks");
 
-            var filelistFileDir = Path.GetDirectoryName(filelistFileVar);
-            var filelistFileName = Path.GetFileName(filelistFileVar);
-            var outChunkFile = extractedFilelistDir + "\\Chunks\\Chunk_";
-            var outEntriesFile = extractedFilelistDir + "\\Chunk_entries\\Chunk_";
-            var encHeaderFile = extractedFilelistDir + "\\EncryptionHeader_(DON'T EDIT)";
+            var filelistVariables = new FilelistVariables();
+            if (File.Exists(encHeaderFile))
+            {
+                filelistVariables.IsEncrypted = true;
+            }
 
-            (extractedFilelistDir + "\\Chunks").CheckDirExists("Error: Unable to locate the unpacked 'Chunks' directory");
-            (extractedFilelistDir + "\\Chunk_entries").CheckDirExists("Error: Unable to locate the unpacked 'Chunk_entries' directory");
-
-
-            var filelistVariables = new FilelistProcesses();
-            filelistVariables.TotalChunks = (uint)Directory.GetFiles(extractedFilelistDir + "\\Chunks", "*.txt", SearchOption.AllDirectories).Length;
-            filelistVariables.IsEncrypted = FilelistProcesses.CheckIfEncrypted(filelistFileVar);
             uint encHeaderAdjustedOffset = 0;
-
-            if (filelistVariables.IsEncrypted.Equals(true))
+            if (filelistVariables.IsEncrypted)
             {
                 encHeaderAdjustedOffset += 32;
-                encHeaderFile.CheckFileExists("Error: Unable to locate the 'EncryptionHeader_(DON'T EDIT)' file");
-                cryptTool.CheckFileExists("Error: Unable to locate ffxiiicrypt tool in the main app folder to encrypt the filelist file");
             }
 
-            var backupFilelistFile = Path.Combine(filelistFileDir, filelistFileName + ".bak");
-            backupFilelistFile.IfFileExistsDel();
-            File.Copy(filelistFileVar, backupFilelistFile);
-            File.Delete(filelistFileVar);
 
+            var newFilelistFile = Path.Combine(Path.GetDirectoryName(extractedFilelistDir), Path.GetFileName(extractedFilelistDir).Substring(1));
 
-            var repackVariables = new RepackProcesses();
-
-            using (var newFilelist = new FileStream(filelistFileVar, FileMode.Append, FileAccess.Write))
+            if (File.Exists(newFilelistFile))
             {
-                if (filelistVariables.IsEncrypted.Equals(true))
+                (newFilelistFile + ".bak").IfFileExistsDel();
+
+                File.Copy(newFilelistFile, newFilelistFile + ".bak");
+                File.Delete(newFilelistFile);
+            }
+
+
+            using (var countsReader = new StreamReader(countsFile))
+            {
+                filelistVariables.TotalFiles = uint.Parse(countsReader.ReadLine());
+                filelistVariables.TotalChunks = uint.Parse(countsReader.ReadLine());
+
+                Console.WriteLine("TotalChunks: " + filelistVariables.TotalChunks);
+                Console.WriteLine("No of files: " + filelistVariables.TotalFiles + "\n");
+            }
+
+
+            var int16RangeValues = new List<uint>();
+            if (gameCode.Equals(GameCodes.ff132) && filelistVariables.TotalChunks > 1)
+            {
+                var nextChunkNo = 1;
+                for (int i = 0; i < filelistVariables.TotalChunks; i++)
                 {
-                    // Copy the encryption header file's data
-                    // into the new filelist file
+                    if (i == nextChunkNo)
+                    {
+                        int16RangeValues.Add((uint)i);
+                        nextChunkNo += 2;
+                    }
+                }
+            }
+
+
+            using (var emptyFilelistStream = new FileStream(newFilelistFile, FileMode.Append, FileAccess.Write))
+            {
+                if (filelistVariables.IsEncrypted)
+                {
                     using (var encHeader = new FileStream(encHeaderFile, FileMode.Open, FileAccess.Read))
                     {
-                        encHeader.Seek(0, SeekOrigin.Begin);
-                        encHeader.CopyTo(newFilelist);
+                        encHeader.ExCopyTo(emptyFilelistStream, 0, encHeader.Length);
                     }
                 }
 
-                for (int b = 0; b < 12; b++)
+                var amountToPad = 12 + (filelistVariables.TotalFiles * 8) + (filelistVariables.TotalChunks * 12);
+                for (int b = 0; b < amountToPad; b++)
                 {
-                    newFilelist.WriteByte(0);
-                }
-
-                filelistVariables.ChunkFNameCount = 0;
-                for (int c = 0; c < filelistVariables.TotalChunks; c++)
-                {
-                    // Copy the entries file's data into
-                    // the new filelist file
-                    using (var entryFiles = new FileStream(outEntriesFile + filelistVariables.ChunkFNameCount + "_entries.bin", FileMode.Open, FileAccess.Read))
-                    {
-                        entryFiles.CopyTo(newFilelist);
-                    }
-
-                    repackVariables.LastChunkFileNumber = filelistVariables.ChunkFNameCount;
-
-                    filelistVariables.ChunkFNameCount++;
-                }
-
-                filelistVariables.ChunkInfoSectionOffset = (uint)newFilelist.Length;
-                if (filelistVariables.IsEncrypted.Equals(true))
-                {
-                    filelistVariables.ChunkInfoSectionOffset -= 32;
-                }
-
-                for (int b = 0; b < filelistVariables.TotalChunks * 12; b++)
-                {
-                    newFilelist.WriteByte(0);
+                    emptyFilelistStream.WriteByte(0);
                 }
             }
 
 
-            // Compress and pack chunks into the new filelist
-            // file and update the info offsets.
-            using (var newFilelistChunks = new FileStream(filelistFileVar, FileMode.Append, FileAccess.Write, FileShare.Write))
+            filelistVariables.ChunkFNameCount = 0;
+            using (var entriesStream = new FileStream(newFilelistFile, FileMode.Open, FileAccess.Write))
             {
-                using (var newChunksInfoWriterStream = new FileStream(filelistFileVar, FileMode.Open, FileAccess.Write, FileShare.Write))
+                using (var entriesWriter = new BinaryWriter(entriesStream))
                 {
-                    using (var newChunksInfoWriter = new BinaryWriter(newChunksInfoWriterStream))
+                    outChunksDir.IfDirExistsDel();
+                    Directory.CreateDirectory(outChunksDir);
+
+
+                    var lastChunk = filelistVariables.TotalChunks - 1;
+                    uint entriesWritePos = encHeaderAdjustedOffset + 12;
+
+                    for (int c = 0; c < filelistVariables.TotalChunks; c++)
                     {
+                        var currentChunkFile = Path.Combine(extractedFilelistDir, $"Chunk_{filelistVariables.ChunkFNameCount}.txt");
+                        var outChunkFile = Path.Combine(outChunksDir, $"Chunk_{filelistVariables.ChunkFNameCount}");
 
-                        filelistVariables.ChunkFNameCount = 0;
-                        var chunkInfoWriterPos = filelistVariables.ChunkInfoSectionOffset;
-                        var chunkCmpSize = (uint)0;
-                        var chunkUncmpSize = (uint)0;
-                        var chunkStartVal = (uint)0;
-                        var appendAt = (uint)0;
-                        for (int nc = 0; nc < filelistVariables.TotalChunks; nc++)
+                        using (var currentChunkReader = new StreamReader(currentChunkFile))
                         {
-                            appendAt = (uint)newFilelistChunks.Length;
-                            newFilelistChunks.Seek(appendAt, SeekOrigin.Begin);
-
-                            if (nc.Equals(0))
+                            using (var outChunkStream = new FileStream(outChunkFile, FileMode.Append, FileAccess.Write))
                             {
-                                filelistVariables.ChunkDataSectionOffset = appendAt;
-                                if (filelistVariables.IsEncrypted.Equals(true))
-                                {
-                                    filelistVariables.ChunkDataSectionOffset -= 32;
-                                }
-                            }
-
-                            chunkUncmpSize = (uint)new FileInfo(outChunkFile + filelistVariables.ChunkFNameCount + ".txt").Length;
-                            var chunkCmpData = (outChunkFile + filelistVariables.ChunkFNameCount + ".txt").ZlibCompress();
-                            newFilelistChunks.Write(chunkCmpData, 0, chunkCmpData.Length);
-                            chunkCmpSize = (uint)chunkCmpData.Length;
-
-                            newChunksInfoWriter.AdjustBytesUInt32(encHeaderAdjustedOffset + chunkInfoWriterPos, chunkUncmpSize, CmnEnums.Endianness.LittleEndian);
-                            newChunksInfoWriter.AdjustBytesUInt32(encHeaderAdjustedOffset + chunkInfoWriterPos + 4, chunkCmpSize, CmnEnums.Endianness.LittleEndian);
-                            newChunksInfoWriter.AdjustBytesUInt32(encHeaderAdjustedOffset + chunkInfoWriterPos + 8, chunkStartVal, CmnEnums.Endianness.LittleEndian);
-
-                            var newChunkStartVal = chunkStartVal + chunkCmpSize;
-                            chunkStartVal = newChunkStartVal;
-
-                            chunkInfoWriterPos += 12;
-
-                            filelistVariables.ChunkFNameCount++;
-                        }
-                    }
-                }
-            }
-
-
-            // Update the header offsets and 
-            // the File Entry offsets
-            repackVariables.NewFilelistFile = filelistFileVar;
-
-            using (var updatedFilelist = new FileStream(filelistFileVar, FileMode.Open, FileAccess.ReadWrite))
-            {
-                using (var updatedFilelistWriter = new BinaryWriter(updatedFilelist))
-                {
-                    using (var updatedFilelistReader = new BinaryReader(updatedFilelist))
-                    {
-
-                        updatedFilelistWriter.AdjustBytesUInt32(encHeaderAdjustedOffset + 0, filelistVariables.ChunkInfoSectionOffset, CmnEnums.Endianness.LittleEndian);
-                        updatedFilelistWriter.AdjustBytesUInt32(encHeaderAdjustedOffset + 4, filelistVariables.ChunkDataSectionOffset, CmnEnums.Endianness.LittleEndian);
-                        using (var sr = new StreamReader(extractedFilelistDir + "\\FileCount.txt"))
-                        {
-                            filelistVariables.TotalFiles = uint.Parse(sr.ReadLine());
-                        }
-                        updatedFilelistWriter.AdjustBytesUInt32(encHeaderAdjustedOffset + 8, filelistVariables.TotalFiles, CmnEnums.Endianness.LittleEndian);
-
-                        filelistVariables.ChunkFNameCount = 0;
-                        var fileInfoWriterPos = (uint)18;
-                        if (gameCodeVar.Equals(CmnEnums.GameCodes.ff132))
-                        {
-                            // Change fileInfo writer position
-                            // according to the game code.
-                            fileInfoWriterPos = 16;
-
-                            // If encrypted, increase the 
-                            // position to factor in the
-                            // encryption header.
-                            if (filelistVariables.IsEncrypted.Equals(true))
-                            {
-                                fileInfoWriterPos += 32;
-                            }
-                        }
-                        for (int ncf = 0; ncf < filelistVariables.TotalChunks; ncf++)
-                        {
-                            var filesInNewChunkCount = FilelistProcesses.GetFilesInChunkCount(outChunkFile + filelistVariables.ChunkFNameCount + ".txt");
-                            if (repackVariables.LastChunkFileNumber.Equals(filelistVariables.ChunkFNameCount))
-                            {
-                                filesInNewChunkCount--;
-                            }
-
-                            using (var chunkStream = new FileStream(outChunkFile + filelistVariables.ChunkFNameCount + ".txt", FileMode.Open, FileAccess.Read))
-                            {
-                                using (var chunkReader = new BinaryReader(chunkStream))
+                                using (var outChunkWriter = new StreamWriter(outChunkStream))
                                 {
 
-                                    var filePosInChunk = (ushort)0;
-                                    var filePosInChunkToWrite = (ushort)0;
-                                    for (int fic = 0; fic < filesInNewChunkCount; fic++)
+                                    var filesInChunk = File.ReadAllLines(currentChunkFile).Count();
+                                    ushort pathPos = 0;
+
+                                    for (int f = 0; f < filesInChunk; f++)
                                     {
-                                        // According to the game code, check how to
-                                        // write the value and then set the appropriate
-                                        // converted value to write.
-                                        if (gameCodeVar.Equals(CmnEnums.GameCodes.ff132))
-                                        {
-                                            updatedFilelistReader.BaseStream.Position = fileInfoWriterPos;
-                                            var checkVal = updatedFilelistReader.ReadUInt16();
+                                        var chunkData = currentChunkReader.ReadLine().Split('|');
+                                        var fileCode = uint.Parse(chunkData[0]);
 
-                                            if (checkVal > 32767)
-                                            {
-                                                filePosInChunkToWrite = (ushort)(filePosInChunkToWrite + 32768);
-                                            }
+                                        entriesWriter.ExWriteBytesUInt32(entriesWritePos, fileCode, Endianness.LittleEndian);
+
+                                        switch (gameCode)
+                                        {
+                                            case GameCodes.ff131:
+                                                var chunkNumber = ushort.Parse(chunkData[1]);
+
+                                                entriesWriter.ExWriteBytesUInt16(entriesWritePos + 4, chunkNumber);
+                                                entriesWriter.ExWriteBytesUInt16(entriesWritePos + 6, pathPos);
+
+                                                outChunkWriter.Write(chunkData[2] + "\0");
+                                                pathPos += (ushort)(chunkData[2] + "\0").Length;
+                                                break;
+
+                                            case GameCodes.ff132:
+                                                if (int16RangeValues.Contains(filelistVariables.ChunkFNameCount))
+                                                {
+                                                    entriesWriter.ExWriteBytesUInt16(entriesWritePos + 4, (ushort)(32768 + pathPos));
+                                                }
+                                                else
+                                                {
+                                                    entriesWriter.ExWriteBytesUInt16(entriesWritePos + 4, pathPos);
+                                                }
+
+                                                var chunkNumByte = byte.Parse(chunkData[1]);
+                                                var unkVal = byte.Parse(chunkData[2]);
+
+                                                entriesWriter.BaseStream.Position = entriesWritePos + 6;
+                                                entriesWriter.Write(chunkNumByte);
+
+                                                entriesWriter.BaseStream.Position = entriesWritePos + 7;
+                                                entriesWriter.Write(unkVal);
+
+                                                outChunkWriter.Write(chunkData[3] + "\0");
+                                                pathPos += (ushort)(chunkData[3] + "\0").Length;
+                                                break;
                                         }
 
-                                        updatedFilelistWriter.AdjustBytesUInt16(fileInfoWriterPos, filePosInChunkToWrite);
+                                        entriesWritePos += 8;
+                                    }
 
-                                        var readString = chunkReader.BinaryToString(filePosInChunk);
-
-                                        filePosInChunk = (ushort)chunkReader.BaseStream.Position;
-                                        filePosInChunkToWrite = (ushort)chunkReader.BaseStream.Position;
-                                        fileInfoWriterPos += 8;
+                                    if (filelistVariables.ChunkFNameCount == lastChunk)
+                                    {
+                                        outChunkWriter.Write("end\0");
                                     }
                                 }
                             }
+                        }
 
+                        filelistVariables.ChunkFNameCount++;
+                    }
+                }
+            }
+
+
+            filelistVariables.ChunkFNameCount = 0;
+            uint chunkStart = 0;
+            var chunksInfoWriterPos = encHeaderAdjustedOffset + 12 + (filelistVariables.TotalFiles * 8);
+            var chunksDataStartPos = encHeaderAdjustedOffset + 12 + (filelistVariables.TotalFiles * 8) + (filelistVariables.TotalChunks * 12);
+
+            using (var chunkDataStream = new FileStream(newFilelistFile, FileMode.Append, FileAccess.Write, FileShare.Write))
+            {
+                using (var chunkInfoStream = new FileStream(newFilelistFile, FileMode.Open, FileAccess.Write, FileShare.Write))
+                {
+                    using (var chunkInfoWriter = new BinaryWriter(chunkInfoStream))
+                    {
+
+                        chunkInfoWriter.ExWriteBytesUInt32(encHeaderAdjustedOffset, chunksInfoWriterPos - encHeaderAdjustedOffset, Endianness.LittleEndian);
+                        chunkInfoWriter.ExWriteBytesUInt32(encHeaderAdjustedOffset + 4, chunksDataStartPos - encHeaderAdjustedOffset, Endianness.LittleEndian);
+                        chunkInfoWriter.ExWriteBytesUInt32(encHeaderAdjustedOffset + 8, filelistVariables.TotalFiles, Endianness.LittleEndian);
+
+
+                        for (int fc = 0; fc < filelistVariables.TotalChunks; fc++)
+                        {
+                            var currentChunkFile = Path.Combine(outChunksDir, $"Chunk_{filelistVariables.ChunkFNameCount}");
+                            var uncmpSize = (uint)new FileInfo(currentChunkFile).Length;
+
+                            var cmpChunkArray = currentChunkFile.ZlibCompress();
+                            var cmpSize = (uint)cmpChunkArray.Length;
+                            chunkDataStream.Write(cmpChunkArray, 0, cmpChunkArray.Length);
+
+                            chunkInfoWriter.ExWriteBytesUInt32(chunksInfoWriterPos, uncmpSize, Endianness.LittleEndian);
+                            chunkInfoWriter.ExWriteBytesUInt32(chunksInfoWriterPos + 4, cmpSize, Endianness.LittleEndian);
+                            chunkInfoWriter.ExWriteBytesUInt32(chunksInfoWriterPos + 8, chunkStart, Endianness.LittleEndian);
+
+                            chunkStart += cmpSize;
+                            chunksInfoWriterPos += 12;
                             filelistVariables.ChunkFNameCount++;
                         }
                     }
                 }
             }
 
-            if (filelistVariables.IsEncrypted.Equals(true))
+
+            outChunksDir.IfDirExistsDel();
+
+            var repackVariables = new RepackVariables();
+            repackVariables.NewFilelistFile = newFilelistFile;
+
+            if (filelistVariables.IsEncrypted)
             {
                 FilelistProcesses.EncryptProcess(repackVariables);
             }
 
-            Console.WriteLine("\nFinished repacking " + filelistFileName);
+            Console.WriteLine("\n\nFinished repacking filelist data into " + Path.GetFileName(newFilelistFile));
         }
     }
 }

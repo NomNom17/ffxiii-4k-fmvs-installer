@@ -31,3 +31,17 @@ C:\Users\NomNom\Documents\GitHub\ffxiii-4k-fmvs-installer\FFXIII4kMovieMod\obj\R
 C:\Users\NomNom\Documents\GitHub\ffxiii-4k-fmvs-installer\FFXIII4kMovieMod\obj\Release\FFXIII4kMovieMod.csproj.CoreCompileInputs.cache
 C:\Users\NomNom\Documents\GitHub\ffxiii-4k-fmvs-installer\FFXIII4kMovieMod\obj\Release\FFXIII4kMovieMod.csproj.CopyComplete
 C:\Users\NomNom\Documents\GitHub\ffxiii-4k-fmvs-installer\FFXIII4kMovieMod\obj\Release\FFXIII4kMovieMod.exe
+U:\Documents\Visual Studio Projects\C# stuff\App projects\FFXIII Mod Programs\FFXIII\ffxiii-4k-fmvs-installer\FFXIII4kMovieMod\obj\Release\FFXIII4kMovieMod.csproj.AssemblyReference.cache
+U:\Documents\Visual Studio Projects\C# stuff\App projects\FFXIII Mod Programs\FFXIII\ffxiii-4k-fmvs-installer\FFXIII4kMovieMod\obj\Release\FFXIII4kMovieMod.csproj.CoreCompileInputs.cache
+U:\Documents\Visual Studio Projects\C# stuff\App projects\FFXIII Mod Programs\FFXIII\ffxiii-4k-fmvs-installer\FFXIII4kMovieMod\obj\Release\FFXIII4kMovieMod.exe
+U:\Documents\Visual Studio Projects\C# stuff\App projects\FFXIII Mod Programs\FFXIII\ffxiii-4k-fmvs-installer\FFXIII4kMovieMod\bin\Release\FFXIII4kMovieMod.exe.config
+U:\Documents\Visual Studio Projects\C# stuff\App projects\FFXIII Mod Programs\FFXIII\ffxiii-4k-fmvs-installer\FFXIII4kMovieMod\bin\Release\FFXIII4kMovieMod.exe
+U:\Documents\Visual Studio Projects\C# stuff\App projects\FFXIII Mod Programs\FFXIII\ffxiii-4k-fmvs-installer\FFXIII4kMovieMod\bin\Release\Spectre.Console.dll
+U:\Documents\Visual Studio Projects\C# stuff\App projects\FFXIII Mod Programs\FFXIII\ffxiii-4k-fmvs-installer\FFXIII4kMovieMod\bin\Release\System.Buffers.dll
+U:\Documents\Visual Studio Projects\C# stuff\App projects\FFXIII Mod Programs\FFXIII\ffxiii-4k-fmvs-installer\FFXIII4kMovieMod\bin\Release\System.Memory.dll
+U:\Documents\Visual Studio Projects\C# stuff\App projects\FFXIII Mod Programs\FFXIII\ffxiii-4k-fmvs-installer\FFXIII4kMovieMod\bin\Release\System.Numerics.Vectors.dll
+U:\Documents\Visual Studio Projects\C# stuff\App projects\FFXIII Mod Programs\FFXIII\ffxiii-4k-fmvs-installer\FFXIII4kMovieMod\bin\Release\System.Runtime.CompilerServices.Unsafe.dll
+U:\Documents\Visual Studio Projects\C# stuff\App projects\FFXIII Mod Programs\FFXIII\ffxiii-4k-fmvs-installer\FFXIII4kMovieMod\bin\Release\LocateFile.dll
+U:\Documents\Visual Studio Projects\C# stuff\App projects\FFXIII Mod Programs\FFXIII\ffxiii-4k-fmvs-installer\FFXIII4kMovieMod\bin\Release\WDBtool.dll
+U:\Documents\Visual Studio Projects\C# stuff\App projects\FFXIII Mod Programs\FFXIII\ffxiii-4k-fmvs-installer\FFXIII4kMovieMod\bin\Release\WhiteBinTools.dll
+U:\Documents\Visual Studio Projects\C# stuff\App projects\FFXIII Mod Programs\FFXIII\ffxiii-4k-fmvs-installer\FFXIII4kMovieMod\obj\Release\FFXIII4k.8C14DF49.Up2Date

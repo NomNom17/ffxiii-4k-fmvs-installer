@@ -2,24 +2,22 @@
 using System.IO;
 using WhiteBinTools.FilelistClasses;
 using WhiteBinTools.SupportClasses;
+using static WhiteBinTools.SupportClasses.ProgramEnums;
 
 namespace WhiteBinTools.UnpackClasses
 {
     public class UnpackTypeA
     {
-        public static void UnpackFull(CmnEnums.GameCodes gameCodeVar, string filelistFileVar, string whiteBinFileVar)
+        public static void UnpackFull(GameCodes gameCodeVar, string filelistFile, string whiteBinFile)
         {
-            filelistFileVar.CheckFileExists("Error: Filelist file specified in the argument is missing");
-            whiteBinFileVar.CheckFileExists("Error: Image bin file specified in the argument is missing");
+            var filelistVariables = new FilelistVariables();
+            var unpackVariables = new UnpackVariables();
 
-            var filelistVariables = new FilelistProcesses();
-            var unpackVariables = new UnpackProcess();
+            FilelistProcesses.PrepareFilelistVars(filelistVariables, filelistFile);
+            UnpackProcess.PrepareBinVars(whiteBinFile, unpackVariables);
 
-            FilelistProcesses.PrepareFilelistVars(filelistVariables, filelistFileVar);
-            UnpackProcess.PrepareBinVars(whiteBinFileVar, unpackVariables);
-
-            filelistVariables.DefaultChunksExtDir = unpackVariables.ExtractDir + "\\_chunks";
-            filelistVariables.ChunkFile = filelistVariables.DefaultChunksExtDir + "\\chunk_";
+            filelistVariables.DefaultChunksExtDir = Path.Combine(unpackVariables.ExtractDir, "_chunks");
+            filelistVariables.ChunkFile = Path.Combine(filelistVariables.DefaultChunksExtDir, "chunk_");
 
             if (Directory.Exists(unpackVariables.ExtractDir))
             {
@@ -33,52 +31,54 @@ namespace WhiteBinTools.UnpackClasses
 
             FilelistProcesses.DecryptProcess(gameCodeVar, filelistVariables);
 
-            using (var filelist = new FileStream(filelistVariables.MainFilelistFile, FileMode.Open, FileAccess.Read))
+            using (var filelistStream = new FileStream(filelistVariables.MainFilelistFile, FileMode.Open, FileAccess.Read))
             {
-                using (var filelistReader = new BinaryReader(filelist))
+                using (var filelistReader = new BinaryReader(filelistStream))
                 {
-                    FilelistProcesses.GetFilelistOffsets(filelistReader, filelistVariables);
-                    FilelistProcesses.UnpackChunks(filelist, filelistVariables.ChunkFile, filelistVariables);
+                    FilelistChunksPrep.GetFilelistOffsets(filelistReader, filelistVariables);
+                    FilelistChunksPrep.UnpackChunks(filelistStream, filelistVariables.ChunkFile, filelistVariables);
                 }
             }
 
-            if (filelistVariables.IsEncrypted.Equals(true))
+            if (filelistVariables.IsEncrypted)
             {
                 filelistVariables.TmpDcryptFilelistFile.IfFileExistsDel();
-                filelistVariables.MainFilelistFile = filelistFileVar;
+                filelistVariables.MainFilelistFile = filelistFile;
             }
 
 
-            // Extracting files section 
-            filelistVariables.ChunkFNameCount = 0;
-            unpackVariables.CountDuplicates = 0;
-            for (int ch = 0; ch < filelistVariables.TotalChunks; ch++)
+            using (var whiteBinStream = new FileStream(whiteBinFile, FileMode.Open, FileAccess.Read))
             {
-                var filesInChunkCount = FilelistProcesses.GetFilesInChunkCount(filelistVariables.ChunkFile + filelistVariables.ChunkFNameCount);
+                // Extracting files section 
+                filelistVariables.ChunkFNameCount = 0;
+                unpackVariables.CountDuplicates = 0;
 
-                // Open a chunk file for reading
-                using (var currentChunk = new FileStream(filelistVariables.ChunkFile + filelistVariables.ChunkFNameCount, FileMode.Open, FileAccess.Read))
+                for (int ch = 0; ch < filelistVariables.TotalChunks; ch++)
                 {
-                    using (var chunkStringReader = new BinaryReader(currentChunk))
+                    var filesInChunkCount = FilelistProcesses.GetFilesInChunkCount(filelistVariables.ChunkFile + filelistVariables.ChunkFNameCount);
+
+                    // Open a chunk file for reading
+                    using (var currentChunkStream = new FileStream(filelistVariables.ChunkFile + filelistVariables.ChunkFNameCount, FileMode.Open, FileAccess.Read))
                     {
-                        var chunkStringReaderPos = (uint)0;
-                        for (int f = 0; f < filesInChunkCount; f++)
+                        using (var chunkStringReader = new BinaryReader(currentChunkStream))
                         {
-                            var convertedString = chunkStringReader.BinaryToString(chunkStringReaderPos);
 
-                            if (convertedString.Equals("end") || convertedString.Equals(" ") || convertedString.Equals(null))
+                            var chunkStringReaderPos = (uint)0;
+                            for (int f = 0; f < filesInChunkCount; f++)
                             {
-                                break;
-                            }
+                                var convertedString = chunkStringReader.BinaryToString(chunkStringReaderPos);
 
-                            UnpackProcess.PrepareExtraction(convertedString, filelistVariables, unpackVariables.ExtractDir);
-
-                            // Extract all files
-                            using (var whiteBin = new FileStream(whiteBinFileVar, FileMode.Open, FileAccess.Read))
-                            {
-                                if (!Directory.Exists(unpackVariables.ExtractDir + "\\" + filelistVariables.DirectoryPath))
+                                if (convertedString == "end" || convertedString == " " || convertedString == null)
                                 {
-                                    Directory.CreateDirectory(unpackVariables.ExtractDir + "\\" + filelistVariables.DirectoryPath);
+                                    break;
+                                }
+
+                                UnpackProcess.PrepareExtraction(convertedString, filelistVariables, unpackVariables.ExtractDir);
+
+                                // Extract all files
+                                if (!Directory.Exists(Path.Combine(unpackVariables.ExtractDir, filelistVariables.DirectoryPath)))
+                                {
+                                    Directory.CreateDirectory(Path.Combine(unpackVariables.ExtractDir, filelistVariables.DirectoryPath));
                                 }
                                 if (File.Exists(filelistVariables.FullFilePath))
                                 {
@@ -86,17 +86,17 @@ namespace WhiteBinTools.UnpackClasses
                                     unpackVariables.CountDuplicates++;
                                 }
 
-                                UnpackProcess.UnpackFile(filelistVariables, whiteBin, unpackVariables);
+                                UnpackProcess.UnpackFile(filelistVariables, whiteBinStream, unpackVariables);
+
+                                Console.WriteLine(unpackVariables.UnpackedState + " _" +  Path.Combine(unpackVariables.ExtractDirName, filelistVariables.MainPath));
+
+                                chunkStringReaderPos = (uint)chunkStringReader.BaseStream.Position;
                             }
-
-                            Console.WriteLine(unpackVariables.UnpackedState + " _" + unpackVariables.ExtractDirName + "\\" + filelistVariables.MainPath);
-
-                            chunkStringReaderPos = (uint)chunkStringReader.BaseStream.Position;
                         }
                     }
-                }
 
-                filelistVariables.ChunkFNameCount++;
+                    filelistVariables.ChunkFNameCount++;
+                }
             }
 
             Directory.Delete(filelistVariables.DefaultChunksExtDir, true);
